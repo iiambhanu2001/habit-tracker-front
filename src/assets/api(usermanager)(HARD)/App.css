@@ -1,0 +1,100 @@
+/* layout container */
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* form styling */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.form-title {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* input fields */
+.input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* buttons */
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primary {
+  background: #007bff;
+  color: white;
+}
+
+.secondary {
+  background: #6c63ff;
+  color: white;
+}
+
+.danger {
+  background: #d9534f;
+  color: white;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* post list */
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.page-number {
+  font-size: 18px;
+  font-weight: bold;
+}

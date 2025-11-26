@@ -1,38 +1,607 @@
-.App {
-  text-align: center;
+:root{
+  --bg: #0b1220;           /* page background (deep navy) */
+  --surface: #0f1724;      /* card/panel background */
+  --muted: #98a0b3;        /* secondary text */
+  --text: #e6eef8;         /* main text */
+  --accent: #7c4dff;       /* primary accent */
+  --accent-2: #00b0ff;     /* secondary accent */
+  --success: #39b54a;
+  --danger: #e04e4e;
+  --glass: rgba(255,255,255,0.03);
+  --card-border: rgba(255,255,255,0.03);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Page base */
+body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(124,77,255,0.04), transparent 8%),
+    radial-gradient(circle at 90% 90%, rgba(0,176,255,0.03), transparent 12%),
+    var(--bg);
+  color: var(--text);
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Overall page */
+.habbits {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+  color: var(--text);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Header and Add button */
+.habbits h1 { margin-bottom: 20px; color: var(--text) }
+
+.habbits > button {
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  box-shadow: 0 8px 24px rgba(124,77,255,0.08);
+}
+.habbits > button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* Filter dropdown */
+select[name="filter"] {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  margin-bottom: 30px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+  color: var(--text);
+}
+
+/* Habbit list */
+.habbit ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Habbit card */
+.habbit li {
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(180deg,var(--surface), rgba(255,255,255,0.01));
+  border: 1px solid var(--card-border);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.28s, box-shadow 0.28s;
+  color: var(--text);
+}
+
+/* Lift effect on hover */
+.habbit li:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(2,6,23,0.75);
+}
+
+/* Habit title */
+.habbit li h1 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: var(--text);
+}
+
+/* Buttons inside card */
+.habbit li button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: 0.18s;
+  color: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* Mark Done */
+.habbit li button:nth-child(1) {
+  background: linear-gradient(90deg,var(--accent),#4caf50);
+}
+.habbit li button:nth-child(1):hover { transform: translateY(-2px) }
+
+/* Delete */
+.habbit li button:nth-child(2) {
+  background: linear-gradient(90deg,#ff5252,#e04e4e);
+}
+.habbit li button:nth-child(2):hover { transform: translateY(-2px) }
+
+/* Edit */
+.habbit li button:nth-child(3) {
+  background: linear-gradient(90deg,#ffb26b,#ff9800);
+}
+.habbit li button:nth-child(3):hover { transform: translateY(-2px) }
+
+/* Completed habits visual */
+.habbit li[style*="line-through"] {
+  opacity: 0.85;
+  filter: grayscale(0.02) contrast(0.95);
+}
+
+/* Color-coded card backgrounds based on frequency */
+.habbit li[style*="Daily"] {
+  background-color: rgba(124,77,255,0.06);
+}
+.habbit li[style*="Weekly"] {
+  background-color: rgba(0,176,255,0.04);
+}
+.habbit li[style="Monthly"] {
+  background-color: rgba(255,138,101,0.04);
+}
+
+/* posts (single preview) */
+.posts {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(180deg,var(--surface), rgba(255,255,255,0.02));
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: var(--text);
+}
+.posts:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 40px rgba(2,6,23,0.75);
+}
+.posts h1 { margin-bottom: 15px; font-size: 26px; color: var(--text) }
+.posts p { font-size: 16px; margin-bottom: 10px; color: var(--muted) }
+
+/* Completed / pending text */
+.posts .completed { color: var(--success); font-weight: bold; }
+.posts .pending { color: #ffb74d; font-weight: bold; }
+
+/* Frequency-based backgrounds (subtle) */
+.posts[data-frequency="Daily"] { background-color: rgba(124,77,255,0.06) }
+.posts[data-frequency="Weekly"] { background-color: rgba(0,176,255,0.04) }
+.posts[data-frequency="Monthly"] { background-color: rgba(255,138,101,0.04) }
+
+/* Add container (form) */
+.add-container {
+  max-width: 450px;
+  margin: 50px auto;
+  padding: 30px;
+  background: linear-gradient(180deg,var(--surface), rgba(255,255,255,0.01));
+  border-radius: 15px;
+  box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+  font-family: "Poppins", sans-serif;
+  transition: transform 0.3s, box-shadow 0.3s;
+  color: var(--text);
+}
+.add-container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 48px rgba(2,6,23,0.75);
+}
+
+.add-container form { display:flex; flex-direction:column; }
+.add-container input {
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  font-size: 16px;
+  outline: none;
+  transition: border 0.18s, box-shadow 0.18s;
+  background: rgba(255,255,255,0.01);
+  color: var(--text);
+}
+.add-container input::placeholder { color: rgba(230,238,248,0.45) }
+
+.add-container input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(124,77,255,0.06);
+}
+
+.add-container button {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.18s, transform 0.18s;
+  box-shadow: 0 10px 26px rgba(124,77,255,0.09);
+}
+.add-container button:hover:not(:disabled) { transform: translateY(-3px) }
+.add-container button:disabled {
+  background: rgba(255,255,255,0.03);
+  cursor:not-allowed;
+}
+.add-container button[type="button"] {
+  background: linear-gradient(90deg,#ff6b6b,#ff8a80);
+}
+.add-container button[type="button"]:hover { transform: translateY(-3px) }
+
+/* Streak badge */
+.streak-badge {
+  display: inline-block;
+  background: linear-gradient(90deg,#ffde59,#ff8a00);
+  color:#061023;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-top: 10px;
+  box-shadow: 0 8px 18px rgba(2,6,23,0.5);
+  font-size: 14px;
+}
+.streak-badge.long {
+  background: linear-gradient(90deg, #ff9800, #f44336);
+  color: #fff;
+}
+
+/* single dashboard layout */
+.single-dashboard {
+  display: flex;
+  gap: 30px;
+  margin: 50px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Left column for habit info */
+.left-column {
+  flex: 1;
+  background: linear-gradient(180deg,var(--surface), rgba(255,255,255,0.012));
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+  color: var(--text);
+}
+
+/* Right column for charts */
+.right-column {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 30px;
 }
 
-.App-link {
-  color: #61dafb;
+/* Heatmap squares */
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 25px);
+  gap: 5px;
+}
+.heat-square {
+  width: 25px;
+  height: 25px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+.heat-square.done {
+  background: linear-gradient(180deg,var(--accent),var(--accent-2));
+  box-shadow: 0 8px 18px rgba(0,176,255,0.06), inset 0 -4px 10px rgba(0,0,0,0.12);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Pie chart container */
+.right-column canvas {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  padding: 10px;
+  border-radius: 12px;
+}
+
+/* Header & Footer (darker) */
+.app-header {
+  background: linear-gradient(90deg,#071028, #071022);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.7);
+}
+.header-inner, .footer-inner {
+  display:flex; align-items:center; justify-content:space-between; padding:14px 20px;
+}
+.container { max-width:1200px; margin:0 auto; }
+.brand { font-size:20px; letter-spacing:0.4px; font-weight:700; color: var(--text); }
+nav .nav-link {
+  margin-left:14px; padding:8px 12px; border-radius:8px; text-decoration:none; color:var(--muted); font-weight:600;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+}
+nav .nav-link:hover { background: rgba(255,255,255,0.02); color: var(--text); transform: translateY(-2px) }
+
+.app-footer {
+  margin-top:40px;
+  border-top: 1px solid rgba(255,255,255,0.02);
+  padding: 20px 0;
+  background: linear-gradient(180deg,#060914,#04070b);
+  color: var(--muted);
+}
+.app-footer p { margin:0; font-size:14px; color:var(--muted) }
+
+.app-root .main-content { padding: 30px 20px; }
+
+/* Small responsive tweaks */
+@media (max-width: 720px) {
+  .header-inner, .footer-inner { padding: 12px 14px; }
+  nav .nav-link { padding: 7px 10px; margin-left: 8px; }
+  .single-dashboard { flex-direction: column; margin:20px; }
+}
+
+/* Utility */
+.small { font-size: 12px; opacity: 0.9; color: var(--muted); }
+.muted { color: var(--muted); }
+
+/* subtle animated pulse for recently completed */
+@keyframes pulse {
+  0%{ transform: scale(1); opacity: 1 }
+  50%{ transform: scale(1.03); opacity: 0.9 }
+  100%{ transform: scale(1); opacity: 1 }
+}
+.habbit li.done-animated { animation: pulse 1.1s ease-in-out; }
+
+
+button, .habbit li button, .add-container button {
+  color: #fff !important;
+}
+select[name="filter"] {
+  background: rgba(255,255,255,0.05);
+  color: var(--text) !important;
+}
+select[name="filter"] option {
+  background: #fff;
+  color: #000;
+}
+
+/* DELETE button */
+.habbit li button:nth-child(2) {
+  background: #ff3b3b !important;
+  color: #fff !important;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* EDIT button */
+.habbit li button:nth-child(3) {
+  background: #ff9800;
+  color: #fff !important;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Hover improvements */
+.habbit li button:nth-child(2):hover {
+  background: #e92e2e !important
+}
+.habbit li button:nth-child(3):hover {
+  background: #e68600 !important
+}
+.habbit li {
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(15,23,36,0.85); /* cleaner solid surface */
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transition: 0.25s;
+  color: var(--text);
+}
+/* -----------------------------
+  Strong button + card contrast patch
+  Paste after your main CSS (drop-in)
+------------------------------*/
+
+/* Make habit cards solid and visually consistent */
+.habbit li {
+  background: #0d1420 !important;           /* solid dark surface */
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  color: #e9f2ff !important;                /* clear readable text */
+  box-shadow: 0 10px 28px rgba(0,0,0,0.6) !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+/* Slightly brighter headings & muted body text inside cards */
+.habbit li h1 { color: #f3f8ff !important; font-weight:700; }
+.habbit li p, .habbit li span, .habbit li small { color: #bfc9d9 !important; }
+
+/* Default button style for any button that appears inside a habit card.
+   This overrides earlier gradient/transparent rules so text becomes visible. */
+.habbit li button,
+.habbit li .btn,
+.habbit li input[type="button"],
+.habbit li input[type="submit"] {
+  color: #ffffff !important;                       /* white text */
+  background: rgba(0,0,0,0.45) !important;         /* dark button bg */
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6) !important;
+  cursor: pointer !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.35) !important;
+}
+
+/* Make primary action (first button) more prominent */
+.habbit li button:first-of-type,
+.habbit li button.primary,
+.habbit li .btn-primary {
+  background: linear-gradient(90deg,var(--accent),var(--accent-2)) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 10px 26px rgba(124,77,255,0.12) !important;
+}
+
+/* Strong, readable delete & edit buttons (explicit overrides) */
+.habbit li button.delete,
+.habbit li .btn-delete,
+.habbit li button[data-action="delete"],
+.habbit li button[aria-label*="Delete"] {
+  background: #d33838 !important;   /* vivid red */
+  color: #fff !important;
+  border: 1px solid rgba(0,0,0,0.25) !important;
+}
+.habbit li button.edit,
+.habbit li .btn-edit,
+.habbit li button[data-action="edit"],
+.habbit li button[aria-label*="Edit"] {
+  background: #e07a12 !important;   /* clear orange */
+  color: #fff !important;
+  border: 1px solid rgba(0,0,0,0.18) !important;
+}
+
+/* Hover & focus states (accessible) */
+.habbit li button:hover,
+.habbit li button:focus,
+.habbit li .btn:hover,
+.habbit li .btn:focus {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.05) !important;
+  outline: none !important;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.6) !important;
+}
+
+/* Ensure add page / global buttons keep readable text too */
+button,
+.add-container button,
+.habbits > button {
+  color: #fff !important;
+}
+
+/* If your buttons currently rely on nth-child or other fragile selectors,
+   this ensures text remains visible even if markup changes. */
+
+/* Optional: small helper classes you can add in JSX for clarity:
+   <button className="btn btn-delete">Delete</button>
+   <button className="btn btn-edit">Edit</button>
+   <button className="btn btn-primary">Done</button>
+*/
+/* BRAND LINK FIX */
+.brand-link {
+  text-decoration: none !important;      /* remove underline */
+  color: var(--text) !important;         /* use header text color */
+  font-weight: 700;
+}
+
+/* Prevent anchor visited color turning purple */
+.brand-link:visited,
+.brand-link:active {
+  color: var(--text) !important;
+}
+
+/* Optional: hover effect */
+.brand-link:hover {
+  color: #bcd2ff !important;
+  text-shadow: 0 0 8px rgba(180,200,255,0.4);
+}
+
+/* Confirm modal styles */
+.confirm-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(3,6,12,0.6);
+  z-index: 9999;
+  backdrop-filter: blur(3px);
+}
+
+.confirm-modal {
+  width: 92%;
+  max-width: 420px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+  color: var(--text);
+  text-align: left;
+}
+
+.confirm-modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.confirm-modal .confirm-message {
+  margin: 6px 0 18px 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* Buttons inside modal */
+.confirm-actions .btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.12);
+}
+
+/* Cancel (neutral) */
+.btn-cancel {
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+}
+
+/* Confirm (destructive) */
+.btn-confirm {
+  background: linear-gradient(90deg,#ff5252,#e04e4e);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(224,78,78,0.14);
+}
+
+/* Small responsive tweak */
+@media (max-width: 480px) {
+  .confirm-modal { padding: 16px; }
+  .confirm-actions { gap: 8px; }
+}
+
+
+/* Daily – soft purple glow */
+.habbit li[data-frequency="Daily"],
+.habbit li[style*="Daily"] {
+  background: rgba(124, 77, 255, 0.12) !important;
+  border-left: 4px solid #7c4dff !important;
+}
+
+/* Weekly – cyan/blue tint */
+.habbit li[data-frequency="Weekly"],
+.habbit li[style*="Weekly"] {
+  background: rgba(0, 176, 255, 0.12) !important;
+  border-left: 4px solid #00b0ff !important;
+}
+
+/* Monthly – orange/peach tint */
+.habbit li[data-frequency="Monthly"],
+.habbit li[style*="Monthly"] {
+  background: rgba(255, 153, 102, 0.14) !important;
+  border-left: 4px solid #ff9966 !important;
+}
+
+button:disabled {
+  background: #4caf50 !important;
+  color: white !important;
+  cursor: default !important;
+  opacity: 1 !important;
 }
