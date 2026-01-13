@@ -9,7 +9,7 @@ import api from "../src/api/jwt";
 
 import Login from "./auth/login";
 import Signup from "./auth/signup";
-import PrivateRoute from "./auth/private";
+
 
 const App = () => {
   const [habbits, sethabbits] = useState([]);
