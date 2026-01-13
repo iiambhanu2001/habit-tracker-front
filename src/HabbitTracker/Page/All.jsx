@@ -37,7 +37,7 @@ function All({ habbits = [], deleteHabit, markCompleted }) {
   }
   const filterd = habbits.filter((item) => {
     if (filter === "All") return true;
-    return item.frequency === filter;
+    return item.frequency?.trim().toLowerCase() === filter.toLowerCase();
   });
   const frequencyColors = {
     Daily: "#fff8e1",
@@ -60,23 +60,25 @@ function All({ habbits = [], deleteHabit, markCompleted }) {
         <ul>
           {filterd.map((item) => (
             <li
-              key={item.id}
-              onClick={() => funopen(item.id)}
-              data-frequency={item.frequency} // <-- add this
+              key={item._id}
+              onClick={() => funopen(item._id)}
+              data-frequency={item.frequency} 
               style={{
                 textDecoration: item.iscompleted ? "line-through" : "none",
                 cursor: "pointer",
               }}
             >
               <h1>{item.title}</h1>
-              <h5>{item.Description}</h5>
+              <h5>{item.description}</h5>
               <button
-                onClick={() => markCompleted(item.id)}
-                disabled={item.history.includes(
+                onClick={(e) =>  {e.stopPropagation();markCompleted(item._id)}}
+                disabled={(item.history || []).includes(
                   new Date().toISOString().slice(0, 10)
                 )}
               >
-                {item.history.includes(new Date().toISOString().slice(0, 10))
+                {(item.history || []).includes(
+                  new Date().toISOString().slice(0, 10)
+                )
                   ? "Completed ✓"
                   : "Done"}
               </button>
@@ -84,7 +86,7 @@ function All({ habbits = [], deleteHabit, markCompleted }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  askDelete(item.id);
+                  askDelete(item._id);
                 }}
               >
                 Delete
@@ -93,7 +95,7 @@ function All({ habbits = [], deleteHabit, markCompleted }) {
                 onClick={(e) => {
                   e.stopPropagation();
 
-                  navigate(`/edit/${item.id}`);
+                  navigate(`/edit/${item._id}`);
                 }}
               >
                 Edit

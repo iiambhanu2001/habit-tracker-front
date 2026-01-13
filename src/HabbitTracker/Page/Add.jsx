@@ -3,72 +3,80 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
+import api from "../../api/jwt";
 
 function Add({ habbits, addHabit, editHabit }) {
-  const [inputval, setinputval] = useState("");
-  const [freq, setfreq] = useState("");
-  const [des, setDes] = useState("");
+  const [title, settitle] = useState("");
+  const [frequency, setfrequency] = useState("");
+  const [description, setdescription] = useState("");
 
   const navigate = useNavigate();
-  const { abc } = useParams();
-  const editid = Number(abc);
-
-  ///add funciton habit
+  const { abc: editid } = useParams();
+  const isedit = Boolean(editid);
+  const habitalreadyexist = habbits.find((item) => item._id === editid);
 
   useEffect(() => {
-    if (editid) {
-      const itemtobedit = habbits.find((item) => item.id === editid);
-      if (itemtobedit) {
-        setinputval(itemtobedit.title);
-        setfreq(itemtobedit.frequency);
+    if (editid && habitalreadyexist) {
+      settitle(habitalreadyexist.title);
+      setfrequency(habitalreadyexist.frequency);
+      setdescription(habitalreadyexist.description || "");
+    }
+  }, [editid, habitalreadyexist]);
+
+  const Submithabbits = async (e) => {
+      e.preventDefault();
+    try {
+      if (editid) {
+        await editHabit(editid, {
+    title,
+    frequency,
+    description,
+  });
+        
+
+      } 
+      else {
+        await addHabit({
+          title,
+          frequency,
+          description,
+        });
       }
+        navigate("/");
+    } catch (error) {
+      console.log(error);
     }
-  }, [editid]);
-  function Submithabbits() {
-    if (editid) {
-      editHabit(editid, { title: inputval, frequency: freq, Description: des });
-    } else {
-      addHabit({
-        id: Date.now(),
-        title: inputval,
-        frequency: freq,
-        iscompleted: false,
-        history: [],
-        Description: des,
-      });
-    }
-    navigate("/");
-  }
+
+  
+  };
+
   function resetform() {
-    setinputval("");
-    setfreq("");
+    settitle("");
+    setfrequency("");
   }
 
   return (
     <div className="add-container">
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          Submithabbits();
-        }}
+        onSubmit= {Submithabbits}
       >
         <input
           placeholder="title"
-          value={inputval}
-          onChange={(e) => setinputval(e.target.value)}
+          value={title}
+          onChange={(e) => settitle(e.target.value)}
         />
         <input
-          placeholder="freq"
-          value={freq}
-          onChange={(e) => setfreq(e.target.value)}
+          placeholder="daily/weekly/monthly/yearly"
+          value={frequency}
+          onChange={(e) => setfrequency(e.target.value)}
         />
         <input
-          placeholder="Description"
-          value={des}
-          onChange={(e) => setDes(e.target.value)}
+          placeholder="description"
+          value={description}
+          onChange={(e) => setdescription(e.target.value)}
         />
 
-        <button disabled={inputval.trim().length < 1}>
+        <button disabled={title.trim().length < 1}>
           {editid ? "Update" : "Add"}
         </button>
         <button type="button" onClick={() => navigate("/")}>

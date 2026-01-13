@@ -13,7 +13,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 function Single({ habbits = [] }) {
   const { id } = useParams();
 
-  const itemtoclick = habbits.find((item) => item.id === Number(id));
+  const itemtoclick = habbits.find((item) => item._id === id);
 
   if (!itemtoclick) {
     return <p>Loading habit...</p>;
@@ -26,7 +26,7 @@ function Single({ habbits = [] }) {
 
     let streak = 1;
     let today = new Date(sorted[0]);
-    console.log(today);
+
     for (let i = 1; i < sorted.length; i++) {
       const prevdate = new Date(sorted[i]);
       const diff = (today - prevdate) / (1000 * 60 * 60 * 24);

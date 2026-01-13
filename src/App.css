@@ -481,22 +481,14 @@ button,
   color: #fff !important;
 }
 
-/* If your buttons currently rely on nth-child or other fragile selectors,
-   this ensures text remains visible even if markup changes. */
 
-/* Optional: small helper classes you can add in JSX for clarity:
-   <button className="btn btn-delete">Delete</button>
-   <button className="btn btn-edit">Edit</button>
-   <button className="btn btn-primary">Done</button>
-*/
-/* BRAND LINK FIX */
 .brand-link {
-  text-decoration: none !important;      /* remove underline */
-  color: var(--text) !important;         /* use header text color */
+  text-decoration: none !important;     
+  color: var(--text) !important;        
   font-weight: 700;
 }
 
-/* Prevent anchor visited color turning purple */
+
 .brand-link:visited,
 .brand-link:active {
   color: var(--text) !important;
@@ -508,7 +500,7 @@ button,
   text-shadow: 0 0 8px rgba(180,200,255,0.4);
 }
 
-/* Confirm modal styles */
+
 .confirm-modal-backdrop {
   position: fixed;
   inset: 0;
