@@ -1,6 +1,5 @@
 {
   "name": "moodapp",
-  "homepage": "https://bhanu-pratap.github.io/trekyourjourney/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
