@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
-import api from "../../api/jwt";
 
 function Add({ habbits, addHabit, editHabit }) {
   const [title, settitle] = useState("");
@@ -12,7 +11,6 @@ function Add({ habbits, addHabit, editHabit }) {
 
   const navigate = useNavigate();
   const { abc: editid } = useParams();
-  const isedit = Boolean(editid);
   const habitalreadyexist = habbits.find((item) => item._id === editid);
 
   useEffect(() => {
@@ -49,11 +47,6 @@ function Add({ habbits, addHabit, editHabit }) {
 
   
   };
-
-  function resetform() {
-    settitle("");
-    setfrequency("");
-  }
 
   return (
     <div className="add-container">

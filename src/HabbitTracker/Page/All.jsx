@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
 import ConfirmModal from "./Confirmdelete";
@@ -39,11 +39,11 @@ function All({ habbits = [], deleteHabit, markCompleted }) {
     if (filter === "All") return true;
     return item.frequency?.trim().toLowerCase() === filter.toLowerCase();
   });
-  const frequencyColors = {
-    Daily: "#fff8e1",
-    Weekly: "#e1f5fe",
-    Monthly: "#f3e5f5",
-  };
+  // const frequencyColors = {
+  //   Daily: "#fff8e1",
+  //   Weekly: "#e1f5fe",
+  //   Monthly: "#f3e5f5",
+  // };
   return (
     <div className="habbits">
       <h1>Add yours Habits</h1>
